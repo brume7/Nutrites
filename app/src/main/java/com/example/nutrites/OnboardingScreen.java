@@ -118,6 +118,12 @@ public class OnboardingScreen extends AppCompatActivity {
 
             }
 
+            if (position == 2){
+                skipbob.setVisibility(View.INVISIBLE);
+            }else{
+                skipbob.setVisibility(View.VISIBLE);
+            }
+
         }
 
         @Override
