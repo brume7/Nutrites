@@ -47,7 +47,7 @@ public class OnboardingScreen extends AppCompatActivity {
                 if (getitem(0) < 2)
                     mobviewPager.setCurrentItem(getitem(1),true);
                 else {
-                    Intent i  = new Intent(OnboardingScreen.this, MainActivity.class);
+                    Intent i  = new Intent(OnboardingScreen.this, LoginActivity.class);
                     startActivity(i);
                     finish();
 
@@ -60,7 +60,7 @@ public class OnboardingScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i  = new Intent(OnboardingScreen.this, MainActivity.class);
+                Intent i  = new Intent(OnboardingScreen.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
