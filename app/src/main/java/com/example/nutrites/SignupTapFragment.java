@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupTapFragment extends Fragment {
 
-    EditText semail,spass,snumber,srepass;
+    EditText email, pass, number, username;
     Button signup;
     float v=0;
 
@@ -26,10 +26,10 @@ public class SignupTapFragment extends Fragment {
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tap_fragment, container, false);
 
-        semail = root.findViewById(R.id.email);
-        snumber = root.findViewById(R.id.snumber);
-        spass = root.findViewById(R.id.spass);
-        srepass = root.findViewById(R.id.srepass);
+        email = root.findViewById(R.id.semail);
+        number = root.findViewById(R.id.snumber);
+        pass = root.findViewById(R.id.spass);
+        username = root.findViewById(R.id.susername);
         signup = root.findViewById(R.id.signupbutton);
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +38,16 @@ public class SignupTapFragment extends Fragment {
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("users");
 
-                reference.setValue("i did it");
+                String email = SignupTapFragment.this.email.getText().toString();
+                String number = SignupTapFragment.this.number.getText().toString();
+                String username = SignupTapFragment.this.username.getText().toString();
+                String pass = SignupTapFragment.this.pass.getText().toString();
+
+                UserHelperClass userHelperClass = new UserHelperClass(email,number,username,pass);
+
+
+
+                reference.child(username).setValue(userHelperClass);
             }
         });
 
