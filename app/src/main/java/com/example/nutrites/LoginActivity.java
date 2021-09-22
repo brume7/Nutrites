@@ -34,6 +34,23 @@ public class LoginActivity extends AppCompatActivity {
         logviewPager.setAdapter(adapter);
 
         logviewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(logtabLayout));
+        logtabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                logviewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         fb.setTranslationY(300);
         google.setTranslationY(300);

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "408557606602",
+    "project_id": "nutrites-fb325",
+    "storage_bucket": "nutrites-fb325.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408557606602:android:522bc5f0c3d62da27c4633",
+        "android_client_info": {
+          "package_name": "com.example.nutrites"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408557606602-qnm7pvqm6djt387g8cop792oa3h55fsn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcNDIOBkOLHfh4S5eP6k8czAy7l2bfuFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408557606602-qnm7pvqm6djt387g8cop792oa3h55fsn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
