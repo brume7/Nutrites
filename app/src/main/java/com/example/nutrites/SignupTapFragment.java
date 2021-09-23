@@ -1,5 +1,6 @@
 package com.example.nutrites;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -8,10 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignupTapFragment extends Fragment {
 
@@ -39,49 +45,76 @@ public class SignupTapFragment extends Fragment {
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("users");
 
-                String email = SignupTapFragment.this.remail.getText().toString();
-                String number = SignupTapFragment.this.rnumber.getText().toString();
-                String username = SignupTapFragment.this.rusername.getText().toString();
+                String email = SignupTapFragment.this.remail.getText().toString().trim();
+                String number = SignupTapFragment.this.rnumber.getText().toString().trim();
+                String username = SignupTapFragment.this.rusername.getText().toString().trim();
                 String pass = SignupTapFragment.this.rpass.getText().toString();
                 String noWhitespace = "\\A\\w{4,20}\\z";
 
                 if (email.isEmpty()) {
                     remail.setError("Field cannot be empty");
-
+                    remail.requestFocus();
                 } else {
                     if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                         remail.setError("Input Valid Email");
+                        remail.requestFocus();
 
                     }else {
                         if (number.isEmpty()) {
                             rnumber.setError("Field cannot be empty");
+                            rnumber.requestFocus();
 
                         } else {
                             if (!Patterns.PHONE.matcher(number).matches()){
                                 rnumber.setError("Input Valid Number");
+                                rnumber.requestFocus();
 
                             }else {
 
                             if (username.isEmpty()) {
                                 rusername.setError("Field cannot be empty");
+                                rusername.requestFocus();
 
                             } else {
 
                                 if (!username.matches(noWhitespace)) {
                                     rusername.setError("White Spaces are not allowed");
+                                    rusername.requestFocus();
 
                                 } else {
 
-                                if (pass.isEmpty()) {
-                                    rpass.setError("Field cannot be empty");
+                                    Query checkUser = reference.orderByChild("username").equalTo(username);
 
-                                } else {
+                                    checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
 
-                                    UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
+                                                rusername.setError("User name already in use");
+                                                rusername.requestFocus();
+
+                                            }else if (pass.isEmpty()) {
+                                                rpass.setError("Field cannot be empty");
+                                                rpass.requestFocus();
+
+                                            } else {
+
+                                                UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
 
 
-                                    reference.child(username).setValue(userHelperClass);
-                                }
+                                                reference.child(username).setValue(userHelperClass);
+                                                Intent intent = new Intent(getContext().getApplicationContext(),ConfigureUser.class);
+                                                startActivity(intent);
+
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                             }
 
 
