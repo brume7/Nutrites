@@ -89,6 +89,7 @@ public class LoginTabFragment extends Fragment {
                                             intent.putExtra("username", usernameFromDB);
 
                                             startActivity(intent);
+                                            finish();
                                         }else {
                                             lusername.setError("wrong username or password");
                                             lpass.setError("wrong username or password");
@@ -99,6 +100,10 @@ public class LoginTabFragment extends Fragment {
                                         lusername.setError("wrong username or password");
                                         lpass.setError("wrong username or password");
                                     }
+                                }
+
+                                private void finish() {
+                                    finish();
                                 }
 
                                 @Override

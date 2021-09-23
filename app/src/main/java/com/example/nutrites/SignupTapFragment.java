@@ -105,9 +105,14 @@ public class SignupTapFragment extends Fragment {
                                                 reference.child(username).setValue(userHelperClass);
                                                 Intent intent = new Intent(getContext().getApplicationContext(),ConfigureUser.class);
                                                 startActivity(intent);
+                                                finish();
 
                                             }
 
+                                        }
+
+                                        private void finish() {
+                                            finish();
                                         }
 
                                         @Override
