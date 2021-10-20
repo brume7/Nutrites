@@ -60,6 +60,7 @@
 
     <EditText
         android:id="@+id/spass"
+        android:inputType="textPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent=".8"
@@ -75,6 +76,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/openpass"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:src="@drawable/open"
+        app:layout_constraintTop_toTopOf="@id/spass"
+        app:layout_constraintBottom_toBottomOf="@id/spass"
+        app:layout_constraintStart_toStartOf="@id/spass"
+        app:layout_constraintEnd_toEndOf="@id/spass"
+        app:layout_constraintHorizontal_bias="1"
+        />
+    <ImageView
+        android:id="@+id/closepass"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:src="@drawable/close"
+        app:layout_constraintTop_toTopOf="@id/spass"
+        app:layout_constraintBottom_toBottomOf="@id/spass"
+        app:layout_constraintStart_toStartOf="@id/spass"
+        app:layout_constraintEnd_toEndOf="@id/spass"
+        app:layout_constraintHorizontal_bias="1"
+        />
 
     <Button
         android:id="@+id/signupbutton"

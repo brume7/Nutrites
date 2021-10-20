@@ -2,11 +2,13 @@ package com.example.nutrites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginTabFragment extends Fragment {
 
     EditText lusername,lpass;
+    ImageView lopenpassimage, lclosepassimage;
     TextView forgotPass;
     Button login;
     float v=0;
@@ -38,19 +41,43 @@ public class LoginTabFragment extends Fragment {
         lpass = root.findViewById(R.id.pass);
         forgotPass = root.findViewById(R.id.forgotPass);
         login = root.findViewById(R.id.loginbutton);
+        lopenpassimage = root.findViewById(R.id.lopenpass);
+        lclosepassimage = root.findViewById(R.id.lclosepass);
 
         lusername.setTranslationY(800);
         lpass.setTranslationY(800);
         forgotPass.setTranslationY(800);
         login.setTranslationY(800);
+        lopenpassimage.setTranslationY(800);
+        lclosepassimage.setTranslationY(800);
 
         lusername.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(300).start();
         lpass.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        lopenpassimage.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        lclosepassimage.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
         forgotPass.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
         login.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(700).start();
 
         rootNode = FirebaseDatabase.getInstance();
         reference = rootNode.getReference("users");
+
+        lopenpassimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lopenpassimage.setVisibility(View.INVISIBLE);
+                lclosepassimage.setVisibility(View.VISIBLE);
+                lpass.setInputType(InputType.TYPE_CLASS_TEXT);
+            }
+        });
+
+        lclosepassimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lclosepassimage.setVisibility(View.INVISIBLE);
+                lopenpassimage.setVisibility(View.VISIBLE);
+                lpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +116,7 @@ public class LoginTabFragment extends Fragment {
                                             intent.putExtra("username", usernameFromDB);
 
                                             startActivity(intent);
+                                            finish();
                                         }else {
                                             lusername.setError("wrong username or password");
                                             lpass.setError("wrong username or password");
@@ -124,5 +152,9 @@ public class LoginTabFragment extends Fragment {
 
         return root;
 
+    }
+
+    private void finish() {
+        finish();
     }
 }

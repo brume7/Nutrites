@@ -2,12 +2,15 @@ package com.example.nutrites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,9 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 public class SignupTapFragment extends Fragment {
 
     EditText remail, rpass, rnumber, rusername;
+    ImageView opassimage, cpassimage;
     Button signup;
     float v=0;
 
@@ -39,6 +45,27 @@ public class SignupTapFragment extends Fragment {
         rusername = root.findViewById(R.id.susername);
         signup = root.findViewById(R.id.signupbutton);
 
+        opassimage = root.findViewById(R.id.openpass);
+        cpassimage = root.findViewById(R.id.closepass);
+
+        opassimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                opassimage.setVisibility(View.INVISIBLE);
+                cpassimage.setVisibility(View.VISIBLE);
+                rpass.setInputType(InputType.TYPE_CLASS_TEXT);
+            }
+        });
+
+        cpassimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cpassimage.setVisibility(View.INVISIBLE);
+                opassimage.setVisibility(View.VISIBLE);
+                rpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+        });
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,79 +82,105 @@ public class SignupTapFragment extends Fragment {
                     remail.setError("Field cannot be empty");
                     remail.requestFocus();
                 } else {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                        remail.setError("Input Valid Email");
-                        remail.requestFocus();
 
-                    }else {
-                        if (number.isEmpty()) {
-                            rnumber.setError("Field cannot be empty");
-                            rnumber.requestFocus();
+                    Query checkEmail = reference.orderByChild("email").equalTo(email);
+                    checkEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
 
-                        } else {
-                            if (!Patterns.PHONE.matcher(number).matches()){
-                                rnumber.setError("Input Valid Number");
-                                rnumber.requestFocus();
-
-                            }else {
-
-                            if (username.isEmpty()) {
-                                rusername.setError("Field cannot be empty");
-                                rusername.requestFocus();
-
-                            } else {
-
-                                if (!username.matches(noWhitespace)) {
-                                    rusername.setError("White Spaces are not allowed");
-                                    rusername.requestFocus();
+                                remail.setError("Email already in use");
+                                remail.requestFocus();
+                            }
+                            else{
+                                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                                    remail.setError("Input Valid Email");
+                                    remail.requestFocus();
 
                                 } else {
+                                    if (number.isEmpty()) {
+                                        rnumber.setError("Field cannot be empty");
+                                        rnumber.requestFocus();
 
-                                    Query checkUser = reference.orderByChild("username").equalTo(username);
+                                    } else {
+                                        if (!Patterns.PHONE.matcher(number).matches()) {
+                                            rnumber.setError("Input Valid Number");
+                                            rnumber.requestFocus();
 
-                                    checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
+                                        } else {
 
-                                                rusername.setError("User name already in use");
+                                            if (username.isEmpty()) {
+                                                rusername.setError("Field cannot be empty");
                                                 rusername.requestFocus();
-
-                                            }else if (pass.isEmpty()) {
-                                                rpass.setError("Field cannot be empty");
-                                                rpass.requestFocus();
 
                                             } else {
 
-                                                UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
+                                                if (!username.matches(noWhitespace)) {
+                                                    rusername.setError("White Spaces are not allowed");
+                                                    rusername.requestFocus();
+
+                                                } else {
+
+                                                    Query checkUser = reference.orderByChild("username").equalTo(username);
+
+                                                    checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+
+                                                                rusername.setError("User name already in use");
+                                                                rusername.requestFocus();
+
+                                                            } else if (pass.isEmpty()) {
+                                                                rpass.setError("Field cannot be empty");
+                                                                rpass.requestFocus();
+
+                                                            } else {
+
+                                                                UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
 
 
-                                                reference.child(username).setValue(userHelperClass);
-                                                Intent intent = new Intent(getContext().getApplicationContext(),ConfigureUser.class);
-                                                startActivity(intent);
+                                                                reference.child(username).setValue(userHelperClass);
+                                                                Intent intent = new Intent(getContext().getApplicationContext(), ConfigureUser.class);
+                                                                startActivity(intent);
+                                                                finish();
+
+                                                            }
+
+                                                        }
+
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                }
+
 
                                             }
-
                                         }
-
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
+                                    }
+                                }
                             }
 
+                        }
 
-                            }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
                         }
-                        }
-                    }
+                    });
+
             }
             }
         });
 
         return root;
 
+    }
+
+    private void finish() {
+        finish();
     }
 }
