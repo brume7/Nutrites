@@ -33,19 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     float v=0;
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if(user!=null){
-//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//            startActivity(intent);
-//        }
-//
-//
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
         google.setTranslationY(300);
         twitter.setTranslationY(300);
         logtabLayout.setTranslationY(300);
+
+        fb.setVisibility(View.INVISIBLE);
+        twitter.setVisibility(View.INVISIBLE);
 
         fb.setAlpha(v);
         google.setAlpha(v);

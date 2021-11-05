@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class OnboardingScreen extends AppCompatActivity {
 
     ViewPager mobviewPager;
@@ -19,14 +22,30 @@ public class OnboardingScreen extends AppCompatActivity {
 
     TextView[] dots;
     ViewPagerAdapter viewPagerAdapter;
+    private FirebaseAuth mAuth;
 
 
 
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding_screen);
+        mAuth = FirebaseAuth.getInstance();
 
         backbob = findViewById(R.id.backbob);
         nextbob= findViewById(R.id.nextbob);
