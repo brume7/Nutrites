@@ -11,10 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +36,12 @@ public class SignupTapFragment extends Fragment {
     Button signup;
     float v=0;
 
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -47,6 +56,10 @@ public class SignupTapFragment extends Fragment {
 
         opassimage = root.findViewById(R.id.openpass);
         cpassimage = root.findViewById(R.id.closepass);
+        progressBar = root.findViewById(R.id.progressBarS);
+
+        mAuth = FirebaseAuth.getInstance();
+
 
         opassimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,19 +144,27 @@ public class SignupTapFragment extends Fragment {
                                                                 rusername.setError("User name already in use");
                                                                 rusername.requestFocus();
 
-                                                            } else if (pass.isEmpty()) {
-                                                                rpass.setError("Field cannot be empty");
+                                                            } else if (pass.isEmpty() || pass.length() <= 8) {
+                                                                rpass.setError("Field cannot be empty of password cannot be smaller than 8");
                                                                 rpass.requestFocus();
 
                                                             } else {
 
-                                                                UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
+                                                                progressBar.setVisibility(View.VISIBLE);
 
-
-                                                                reference.child(username).setValue(userHelperClass);
-                                                                Intent intent = new Intent(getContext().getApplicationContext(), ConfigureUser.class);
-                                                                startActivity(intent);
-                                                                finish();
+                                                                mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                        if (task.isSuccessful()){
+                                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                                            UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
+                                                                            reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userHelperClass);
+                                                                            Intent intent = new Intent(getContext().getApplicationContext(), ConfigureUser.class);
+                                                                            startActivity(intent);
+                                                                            finish();
+                                                                        }
+                                                                    }
+                                                                });
 
                                                             }
 

@@ -3,17 +3,24 @@ package com.example.nutrites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,12 +39,15 @@ public class LoginTabFragment extends Fragment {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment, container, false);
 
-        lusername = root.findViewById(R.id.username);
+        lusername = root.findViewById(R.id.email);
         lpass = root.findViewById(R.id.pass);
         forgotPass = root.findViewById(R.id.forgotPass);
         login = root.findViewById(R.id.loginbutton);
@@ -50,6 +60,9 @@ public class LoginTabFragment extends Fragment {
         login.setTranslationY(800);
         lopenpassimage.setTranslationY(800);
         lclosepassimage.setTranslationY(800);
+
+        mAuth = FirebaseAuth.getInstance();
+        progressBar = root.findViewById(R.id.progressBarL);
 
         lusername.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(300).start();
         lpass.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
@@ -82,60 +95,41 @@ public class LoginTabFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = LoginTabFragment.this.lusername.getText().toString().trim();
+                String email = LoginTabFragment.this.lusername.getText().toString().trim();
                 String pass = LoginTabFragment.this.lpass.getText().toString().trim();
                 String noWhitespace = "\\A\\w{4,20}\\z";
 
-                if (username.isEmpty()) {
+                if (email.isEmpty()) {
                     lusername.setError("Field cannot be empty");
 
                 } else {
-                    if (!username.matches(noWhitespace)) {
-                        lusername.setError("White Spaces are not allowed");
+                    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        lusername.setError("Invalid email");
 
                     } else {
                         if (pass.isEmpty()) {
                             lpass.setError("Field cannot be empty");
 
                         } else {
+                            progressBar.setVisibility(View.VISIBLE);
 
-                            Query checkUser = reference.orderByChild("username").equalTo(username);
+                            mAuth.signInWithEmailAndPassword(email,pass)
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.exists()){
-                                        String passFromDB = snapshot.child(username).child("password").getValue(String.class);
+                                            if (task.isSuccessful()){
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                                Intent intent = new Intent(getContext().getApplicationContext(),MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
 
-                                        if(passFromDB.equals(pass))
-                                        {
-                                            String emailFromDB = snapshot.child(username).child("email").getValue(String.class);
-                                            String usernameFromDB = snapshot.child(username).child("username").getValue(String.class);
-                                            Intent intent = new Intent(getContext().getApplicationContext(),MainActivity.class);
-                                            intent.putExtra("email", emailFromDB);
-                                            intent.putExtra("username", usernameFromDB);
-
-                                            startActivity(intent);
-                                            finish();
-                                        }else {
-                                            lusername.setError("wrong username or password");
-                                            lpass.setError("wrong username or password");
+                                            }else{
+                                                Toast.makeText(getContext().getApplicationContext(), "Login Failed check your user name and password", Toast.LENGTH_LONG).show();
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                            }
                                         }
-
-
-                                    }else{
-                                        lusername.setError("wrong username or password");
-                                        lpass.setError("wrong username or password");
-                                    }
-                                }
-
-
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+                                    });
                         }
                     }
                 }
