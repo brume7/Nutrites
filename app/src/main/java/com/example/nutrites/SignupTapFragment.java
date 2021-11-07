@@ -157,7 +157,7 @@ public class SignupTapFragment extends Fragment {
                                                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                                                         if (task.isSuccessful()){
                                                                             progressBar.setVisibility(View.INVISIBLE);
-                                                                            UserHelperClass userHelperClass = new UserHelperClass(email, number, username, pass);
+                                                                            UserHelperClass userHelperClass = new UserHelperClass(email, number, username, "1234");
                                                                             reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userHelperClass);
                                                                             Intent intent = new Intent(getContext().getApplicationContext(), ConfigureUser.class);
                                                                             startActivity(intent);

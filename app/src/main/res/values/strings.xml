@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Nutrites</string>
 
+    //Titles
+    <string name="title_one">Let\'s get you started on the perfect meal plan</string>
+
     //Headings
     <string name="heading_one">We are what we eat</string>
     <string name="heading_two">Find your food menu</string>
@@ -19,4 +22,20 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--  Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    //spinners
+    <string-array name="spinner_Ethnicity">
+        <item>American</item>
+        <item>African</item>
+        <item>Asian</item>
+        <item>European</item>
+        <item>Polish</item>
+    </string-array>
+    <string-array name="spinner_Decisions">
+        <item>yes</item>
+        <item>no</item>
+    </string-array>
 </resources>

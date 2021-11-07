@@ -14,7 +14,7 @@
         android:fontFamily="@font/poppins"
         android:text="Skip"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,20 +54,21 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/obviewPager"
-        app:layout_constraintVertical_bias="0.655" />
+        app:layout_constraintVertical_bias="0.678" />
 
     <LinearLayout
         android:id="@+id/obindicator_layout"
         android:layout_width="97dp"
         android:layout_height="37dp"
-        android:layout_marginBottom="100dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nextbob"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.566"
-        app:layout_constraintStart_toStartOf="@+id/obviewPager" />
+        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintStart_toStartOf="@+id/obviewPager"
+        app:layout_constraintTop_toBottomOf="@+id/obviewPager"
+        app:layout_constraintVertical_bias="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

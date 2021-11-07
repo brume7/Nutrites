@@ -21,10 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView name, mail;
+    TextView name, mail, texterH;
     Button logout;
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference reference, reference2;
 
     private String userID;
 
@@ -35,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         logout = findViewById(R.id.logout);
+        texterH = findViewById(R.id.textH);
         name = findViewById(R.id.namem);
         mail = findViewById(R.id.mailm);
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("users");
+        reference2 = FirebaseDatabase.getInstance().getReference("userscon");
         userID = user.getUid();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -59,6 +61,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        reference2.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserConClass userCon = snapshot.getValue(UserConClass.class);
+
+                if (userCon != null){
+                    if (userCon.mode.length()== 3) {
+                        texterH.setText("vegan");
+                    }else{
+                        texterH.setText("so sad");
+                    }
+                }else {
+                    texterH.setText("failed");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
 
 
