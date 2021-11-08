@@ -22,6 +22,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
     float v=0;
 
 
@@ -39,7 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         mAuth = FirebaseAuth.getInstance();
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("users");
 
         createRequest();
 
@@ -150,6 +157,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            UserHelperClass userHelperClass = new UserHelperClass(GoogleSignIn.getLastSignedInAccount(LoginActivity.this).getEmail(),"", GoogleSignIn.getLastSignedInAccount(LoginActivity.this).getDisplayName(),"1234" );
+                            reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userHelperClass);
                             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
 

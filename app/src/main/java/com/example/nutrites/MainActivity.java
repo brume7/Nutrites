@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 UserHelperClass UserProfile = snapshot.getValue(UserHelperClass.class);
 
                 if(UserProfile != null){
-                    name.setText(UserProfile.number);
+                    name.setText(UserProfile.username);
                     mail.setText(UserProfile.email);
                 }
             }
