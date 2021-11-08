@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nutrites">
         <activity
+            android:name=".ForgotPassword"
+            android:exported="false" />
+        <activity
             android:name=".UserConFeedingTypeTabFragment"
             android:exported="false"
             tools:ignore="Instantiatable" />

@@ -161,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                             reference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(userHelperClass);
                             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
+                            finish();
 
 
                         } else {

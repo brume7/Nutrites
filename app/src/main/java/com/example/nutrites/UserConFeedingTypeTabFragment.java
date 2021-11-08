@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,10 +25,10 @@ import java.util.ArrayList;
 public class UserConFeedingTypeTabFragment extends Fragment {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
-    private ProgressBar progressBar;
+    ProgressBar progressBars;
 
-    private FirebaseUser user;
-    private String userID;
+    FirebaseUser user;
+    String userID;
 
     String sHText,sEText;
     Spinner spinnerEthnicity, spinnerHabits;
@@ -72,31 +73,36 @@ public class UserConFeedingTypeTabFragment extends Fragment {
             }
         });
 
-        progressBar = root.findViewById(R.id.progressBarwuc);
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBars = root.findViewById(R.id.progressBarwuc);
+        progressBars.setVisibility(View.INVISIBLE);
 
         finishb = root.findViewById(R.id.wucfinish);
 
         finishb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
                 if (sHText == null || sEText == null){
 
                 }else{
-                    user = FirebaseAuth.getInstance().getCurrentUser();
-                    reference = FirebaseDatabase.getInstance().getReference("userscon");
-                    userID = user.getUid();
-                    UserConClass userConClass = new UserConClass(sEText,sHText);
-                    reference.child(userID).setValue(userConClass);
-                    Intent intent = new Intent(getContext().getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    progressBars.setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext().getApplicationContext(), "Configuring please wait", Toast.LENGTH_LONG).show();
+                    configure();
                 }
             }
         });
 
         return root;
+    }
+
+    private void configure() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("userscon");
+        userID = user.getUid();
+        UserConClass userConClass = new UserConClass(sEText,sHText);
+        reference.child(userID).setValue(userConClass);
+        Intent intent = new Intent(getContext().getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void finish() {
