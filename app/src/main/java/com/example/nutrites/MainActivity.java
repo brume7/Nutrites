@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     if (userCon.mode.length()== 3) {
                         texterH.setText("vegan");
                     }else{
-                        texterH.setText("so sad");
+                        texterH.setText("meat");
                     }
                 }else {
                     texterH.setText("failed");

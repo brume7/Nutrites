@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class UserConFeedingTypeTabFragment extends Fragment {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+    private ProgressBar progressBar;
 
     private FirebaseUser user;
     private String userID;
@@ -36,6 +37,7 @@ public class UserConFeedingTypeTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_user_con_feeding_type_tab_fragment, container, false);
+
 
         spinnerEthnicity = root.findViewById(R.id.spinnerEthnicity);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext().getApplicationContext(), R.array.spinner_Ethnicity, android.R.layout.simple_spinner_item);
@@ -70,11 +72,15 @@ public class UserConFeedingTypeTabFragment extends Fragment {
             }
         });
 
+        progressBar = root.findViewById(R.id.progressBarwuc);
+        progressBar.setVisibility(View.INVISIBLE);
+
         finishb = root.findViewById(R.id.wucfinish);
 
         finishb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 if (sHText == null || sEText == null){
 
                 }else{
