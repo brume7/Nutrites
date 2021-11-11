@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title=""
+        />
+
+    <item
+        android:id="@+id/nav_mealplan"
+        android:icon="@drawable/leaff"
+        android:title="Meal plan"
+        />
+
+    <item
+        android:id="@+id/nav_genmeal"
+        android:icon="@drawable/spoonforkk"
+        android:title="Recipes"
+        />
+
+</menu>
