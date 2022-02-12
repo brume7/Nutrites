@@ -16,6 +16,7 @@ public class MealPlansTabFragment extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.mealplans_tab_fragment, container, false);
         ViewPager breakfastviewPager;
         ViewPager lunchviewPager;
+        ViewPager dinnerviewPager;
 //
         BViewPagerAdapter bviewPagerAdapter;
         breakfastviewPager = (ViewPager) root.findViewById(R.id.breakfastviewPager);
@@ -26,6 +27,11 @@ public class MealPlansTabFragment extends Fragment {
         lunchviewPager = (ViewPager) root.findViewById(R.id.lunchviewPager);
         lviewPagerAdapter = new LViewPagerAdapter(getContext().getApplicationContext());
         lunchviewPager.setAdapter(lviewPagerAdapter);
+
+        DViewPagerAdapter dviewPagerAdapter;
+        dinnerviewPager = (ViewPager) root.findViewById(R.id.dinnerviewPager);
+        dviewPagerAdapter = new DViewPagerAdapter(getContext().getApplicationContext());
+        dinnerviewPager.setAdapter(dviewPagerAdapter);
 
         return root;
     }

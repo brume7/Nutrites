@@ -63,4 +63,15 @@
     <string name="lunchMeal_nine">Jacket potato with filling</string>
     <string name="lunchMeal_ten"> Prawn sandwich</string>
 
+    //Dinner
+    <string name="dinnerMeal_one">Fried rice</string>
+    <string name="dinnerMeal_two">Lasagne</string>
+    <string name="dinnerMeal_three">Curried sausages</string>
+    <string name="dinnerMeal_four">Chicken and vegetable stir fry</string>
+    <string name="dinnerMeal_five">Spaghetti carbonara</string>
+    <string name="dinnerMeal_six">Potato and leek soup</string>
+    <string name="dinnerMeal_seven">Beef nachos</string>
+    <string name="dinnerMeal_eight">Sausage rolls</string>
+    <string name="dinnerMeal_nine">Corn fritters</string>
+    <string name="dinnerMeal_ten"> Paella</string>
 </resources>

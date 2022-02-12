@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:flow_horizontalAlign="center">
+
+
+    <TextView
+        android:id="@+id/dinnertextView"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:fontFamily="@font/segoepr"
+        android:text="Dinner"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/dinnerViewname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/segoepr"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/imageViewFd"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        app:srcCompat="@drawable/friedrice" />
+</LinearLayout>
