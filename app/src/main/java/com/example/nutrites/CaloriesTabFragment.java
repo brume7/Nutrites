@@ -51,7 +51,7 @@ public class CaloriesTabFragment extends Fragment{
                         .url("https://food-calorie-data-search.p.rapidapi.com/api/search?keyword="+food+"")
                         .get()
                         .addHeader("x-rapidapi-host", "food-calorie-data-search.p.rapidapi.com")
-                        .addHeader("x-rapidapi-key", "577c954e1cmsh29073eee6626404p1275dbjsn8466a95f2476")
+                        .addHeader("x-rapidapi-key", "")
                         .build();
 //                Response response = client.newCall(request).execute();
 
