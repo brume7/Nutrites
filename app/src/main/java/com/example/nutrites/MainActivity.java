@@ -9,6 +9,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;

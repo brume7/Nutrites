@@ -65,12 +65,12 @@ public class HomeTabFragment extends Fragment {
 
                 if (userCon != null){
                     if (userCon.mode.length()== 3) {
-                        texterH.setText("vegan");
+                        texterH.setText("vegetarian");
                     }else{
-                        texterH.setText("meat");
+                        texterH.setText("omnivore");
                     }
                 }else {
-                    texterH.setText("failed");
+                    texterH.setText("");
                 }
             }
 
