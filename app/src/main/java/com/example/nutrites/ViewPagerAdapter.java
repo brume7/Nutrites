@@ -65,7 +65,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         slidetitleimage.setAnimation(images[position]);
         slideHeading.setText(headings[position]);
-        slideDesciption.setText(desc[position]);
+//        slideDesciption.setText(desc[position]);
 
         container.addView(view);
 
